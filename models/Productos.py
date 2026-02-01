@@ -1,6 +1,6 @@
 from database.db import conectarDB
 
-class Producto:
+class Productos:
     def __init__(self, id, nombre, imagen, precio, descripcion):
         self.id = id
         self.nombre = nombre
@@ -94,7 +94,7 @@ class Producto:
 
         productos = []
         for f in filas:
-            producto = Producto(
+            producto = Productos(
                 id = f["id_producto"],
                 nombre = f["nombre"],
                 imagen = f["imagen"],

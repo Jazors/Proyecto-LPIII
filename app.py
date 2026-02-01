@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import os
 from werkzeug.utils import secure_filename
-from models.Producto import Producto
+from models.Productos import Productos
 
 app = Flask(__name__)
 
@@ -18,7 +18,7 @@ def login():
 # Página principal
 @app.route("/")
 def index():
-    productos = Producto.listar()
+    productos = Productos.listar()
     return render_template('user/index.html', productos = productos)
 
 
@@ -30,7 +30,7 @@ def nosotros():
 # Producto
 @app.route("/producto/<int:id>")
 def producto(id):
-    producto = Producto.obtener_producto(id)
+    producto = Productos.obtener_producto(id)
     return render_template('user/producto.html', producto = producto)
 
 
@@ -57,7 +57,7 @@ def agregar_producto():
             archivo.save(os.path.join(UPLOAD_FOLDER, nombre_imagen))
 
         # Crear objeto
-        producto = Producto(None, nombre, nombre_imagen, precio, descripcion)
+        producto = Productos(None, nombre, nombre_imagen, precio, descripcion)
 
         # Insertar en la BD
         producto.agregar()
@@ -66,7 +66,7 @@ def agregar_producto():
         # Redireccionar al index
         return redirect(url_for("index"))
 
-    tallas = Producto.obtener_tallas()
+    tallas = Productos.obtener_tallas()
     return render_template("admin/agregar_producto.html", tallas = tallas)
 
 
