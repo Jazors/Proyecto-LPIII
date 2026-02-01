@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block contenido %} 
+    <h1>Nosotros</h1>
+
+    <div class="nosotros">
+        <div class="nosotros__contenido">
+            <p>Mauris pharetra odio a metus tempus, eu ornare ex molestie. Mauris condimentum tincidunt nibh vel tincidunt. Nullam faucibus ullamcorper justo.
+            Fusce rutrum rutrum justo, at hendrerit tellus mattis eu. Aenean id nunc sit amet lectus rhoncus laoreet vitae ut leo.
+            Curabitur pharetra neque id nisi pretium, eget faucibus leo tincidunt. Cras non erat leo. Ut luctus interdum sem quis lacinia.
+            Quisque a mauris eu nulla posuere varius ut lobortis ex. Morbi vitae ultrices dolor, a rhoncus quam.</p>
+
+            <p>Aenean tristique, urna eget ornare viverra, elit est molestie lacus, nec efficitur nunc urna in orci. 
+            Integer quis nisi eget diam elementum porttitor. Duis dapibus ex non gravida tincidunt. 
+            Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+        </div>
+        <img class="nosotros__imagen" src="{{url_for('static',filename='img/nosotros.jpg')}}" alt="imagen">
+    </div>
+<section class="contenedor comprar">
+    <h2 class="comprar__titulo">¿Por qué comprar con nosotros?</h2>
+    <div class="bloques">
+        <div class="bloque">
+            <img class="bloque__imagen" src="{{url_for('static',filename='img/icono_1.png')}}" alt="porque comprar">
+            <h3 class="bloque__titulo">El mejor precio</h3>
+            <p>Aenean tristique, urna eget ornare viverra, elit est molestie lacus, nec efficitur nunc urna in 
+            orci</p>
+        </div> <!--.bloque-->
+        <div class="bloque">
+            <img class="bloque__imagen" src="{{url_for('static',filename='img/icono_2.png')}}" alt="porque comprar">
+            <h3 class="bloque__titulo">Para Devs</h3>
+            <p>Aenean tristique, urna eget ornare viverra, elit est molestie lacus, nec efficitur nunc urna in 
+            orci</p>
+        </div> <!--.bloque-->
+        <div class="bloque">
+            <img class="bloque__imagen" src="{{url_for('static',filename='img/icono_3.png')}}" alt="porque comprar">
+            <h3 class="bloque__titulo">Envio gratis</h3>
+            <p>Aenean tristique, urna eget ornare viverra, elit est molestie lacus, nec efficitur nunc urna in 
+            orci</p>
+        </div> <!--.bloque-->
+        <div class="bloque">
+            <img class="bloque__imagen" src="{{url_for('static',filename='img/icono_4.png')}}" alt="porque comprar">
+            <h3 class="bloque__titulo">La mejor calidad</h3>
+            <p>Aenean tristique, urna eget ornare viverra, elit est molestie lacus, nec efficitur nunc urna in 
+            orci</p>
+        </div> <!--.bloque-->
+    </div> <!--.bloques-->
+
+</section>
+{% endblock %}

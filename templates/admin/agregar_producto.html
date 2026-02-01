@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+    <h1>Agregar Producto</h1>
+
+    <form class="formulario-producto" method="POST" enctype="multipart/form-data">
+        <label for="nombre">Nombre</label>
+        <input class="formulario__campo" type="text" name="nombre" id="nombre">
+
+        <label>Imagen</label>
+        <div class="contenedor-imagen">
+            <label for="imagen">Seleccionar archivo</label>
+            <input class="formulario__campo" type="file" name="imagen" accept="image/*" id="imagen">
+            <span id="nombre_imagen"></span>
+        </div>
+
+        <label for="precio">Precio</label>
+        <input class="formulario__campo" type="number" name="precio" id="precio">
+
+        <label for="talla">Talla</label>
+        <select class="formulario__campo" name="talla" id="talla">
+            <option value="" disabled selected>-- Seleccione una talla --</option>
+            {% for t in tallas: %}
+            <option value="{{t[0]}}">{{t[1]}}</option>
+            {% endfor %}
+        </select>
+
+        <label for="cantidad">Cantidad</label>
+        <input class="formulario__campo"  type="number" name="cantidad" id="cantidad">
+
+        <label for="descripcion">Descripción</label>
+        <textarea class="formulario__campo" name="descripcion" id="descripcion"></textarea>
+
+        <button class="formulario__submit" type="submit">Agregar</button>
+    </form>
+    
+    <script src="/static/js/app.js"></script>
+{% endblock %}
