@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+    <h1>Productos</h1>
+    <div class="agregar_producto">
+        <a href="{{url_for('agregar_producto')}}">+</a>
+    </div>
+    
+    <table class="tabla">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Imagen</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+        {% for p in productos %}
+
+            <tr class="bg">
+                <td>
+                    <div class="producto__informacion">
+                        <p class="producto__nombre">{{p.nombre}}</p>
+                    </div>
+                </td>
+                <td>
+                    <div class="fondo">
+                        <img class="producto__imagen" src="{{url_for('static',filename='uploads/' ~ p.imagen)}}" alt="imagen camisa">
+                    </div>
+                </td>
+                <td>
+                    <p class="producto__precio">{{p.precio}}$</p>
+                </td>
+                <td>
+                    <a class="" href="{{url_for('actualizar_producto', id = p.id)}}">Actualizar</a>
+                    <form class="w-100" method="POST">
+                        <input type="hidden" name="id" value="">
+                        <input type="hidden" name="tipo" value="">
+                        <input class="" type="submit" value="Eliminar">
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+
+{% endblock %}

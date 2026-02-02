@@ -31,7 +31,7 @@ class Productos:
         db = conectarDB()
         cursor = db.cursor()
 
-        cursor.execute(""" INSERT INTO variantes_camisas (id_producto, id_talla, stock) VALUES
+        cursor.execute(""" REPLACE INTO variantes_camisas (id_producto, id_talla, stock) VALUES
                             (?, ?, ?) """, (self.id, id_talla, stock))
         
         db.commit()
@@ -46,6 +46,20 @@ class Productos:
         tallas = cursor.fetchall()
         db.close()
         return tallas
+    
+    @staticmethod
+    def obtener_stock_por_producto(id):
+        db = conectarDB()
+        cursor = db.cursor()
+        cursor.execute("""
+            SELECT t.talla, vc.stock 
+            FROM variantes_camisas vc
+            JOIN tallas t ON vc.id_talla = t.id_talla
+            WHERE vc.id_producto = ?
+        """, (id,))
+        stock_detalle = cursor.fetchall()
+        db.close()
+        return stock_detalle
     
     @staticmethod
     def obtener_producto(id):
@@ -81,7 +95,6 @@ class Productos:
                 "variantes": variantes
             }
 
-    
 
     @staticmethod
     def listar():

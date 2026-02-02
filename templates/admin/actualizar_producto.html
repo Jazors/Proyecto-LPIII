@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block contenido %}
-    <h1>Agregar Producto</h1>
-
+    <h1>Actualizar Producto</h1>
+    
     <form class="formulario-producto" method="POST" enctype="multipart/form-data">
         <label for="nombre">Nombre</label>
-        <input class="formulario__campo" type="text" name="nombre" id="nombre">
+        <input class="formulario__campo" type="text" name="nombre" id="nombre" value="{{producto.nombre}}">
 
         <label>Imagen</label>
         <div class="contenedor-imagen">
@@ -13,32 +13,39 @@
             <input class="formulario__campo" type="file" name="imagen" accept="image/*" id="imagen">
             <span id="nombre_imagen"></span>
         </div>
+        {% if producto.imagen: %}
+        <img src="{{url_for('static', filename='uploads/' ~ producto.imagen)}}" class="imagen-small" alt="imagen">
+        {% endif %}
 
         <label for="precio">Precio</label>
-        <input class="formulario__campo" type="number" name="precio" id="precio">
+        <input class="formulario__campo" type="number" name="precio" id="precio" value="{{producto.precio}}">
 
         <div class="seccion-tallas">
             <div class="encabezado-tallas">
                 <span class="label-mini">Talla</span>
                 <span class="label-mini">Cantidad</span>
             </div>
-
             {% for t in tallas %}
             <div class="fila-talla">
                 <input type="text" class="formulario__campo" value="{{ t[1] }}">
                 
                 <input type="hidden" name="id_talla[]" value="{{ t[0] }}">
+                {% set vc = namespace(cantidad=0) %}
+                {% for s in stock %}
+                    {% if s[0] == t[1] %}
+                        {% set vc.cantidad = s[1] %}
+                    {% endif %}
+                {% endfor %}
                 
-                <input class="formulario__campo" type="number" name="cantidad[]" placeholder="0" min="0">
+                <input class="formulario__campo" type="number" name="cantidad[]" value="{{vc.cantidad}}" placeholder="0" min="0">
             </div>
             {% endfor %}
         </div>
 
-
         <label for="descripcion">Descripción</label>
-        <textarea class="formulario__campo" name="descripcion" id="descripcion"></textarea>
+        <textarea class="formulario__campo" name="descripcion" id="descripcion">{{producto.descripcion}}</textarea>
 
-        <button class="formulario__submit" type="submit">Agregar</button>
+        <button class="formulario__submit" type="submit">Actualizar</button>
     </form>
     
     <script src="/static/js/app.js"></script>

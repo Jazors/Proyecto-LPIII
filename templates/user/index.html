@@ -8,7 +8,7 @@
         {% for p in productos %}
         <div class="producto">
             <a href="{{url_for('producto', id = p.id)}}">
-                <img class="producto__imagen" src="{{url_for('static',filename='uploads/' ~ p.imagen)}}" alt="imagen camisa">
+                <img class="" src="{{url_for('static',filename='uploads/' ~ p.imagen)}}" alt="imagen camisa">
                 <div class="producto__informacion">
                     <p class="producto__nombre">{{p.nombre}}</p>
                     <p class="producto__precio">{{p.precio}}$</p>
