@@ -33,6 +33,15 @@ def producto(id):
     producto = Productos.obtener_producto(id)
     return render_template('user/producto.html', producto = producto)
 
+# Carrito
+@app.route('/carrito', methods=["GET", "POST"])
+def agregar_al_carrito():
+    if request.method=='POST':
+        id_producto = request.form['id_producto']
+        talla = request.form['talla']
+        stock = request.form['cantidad']
+        
+        return redirect('/')
 
 
 #### ADMIN ####
@@ -41,7 +50,8 @@ def producto(id):
 @app.route('/admin')
 def admin():
     productos = Productos.listar()
-    return render_template('admin/index.html', productos = productos)
+    tallas = Productos.obtener_tallas()
+    return render_template('admin/index.html', productos = productos, tallas = tallas)
 
 
 # Agregar productos
@@ -52,8 +62,9 @@ def agregar_producto():
         nombre = request.form["nombre"]
         precio = request.form["precio"]
         descripcion = request.form["descripcion"]
+        codigo = request.form["codigo"]
 
-        # Capturamos todos los IDs de tallas y todas las cantidades como listas para las diferentes cantidades por cada talla
+        # Capturamos todos los IDs de tallas y todas las cantidades como listas (esto es porque son diferentes cantidades por cada talla)
         ids_tallas = request.form.getlist("id_talla[]")
         cantidades = request.form.getlist("cantidad[]")
 
@@ -64,18 +75,18 @@ def agregar_producto():
             archivo.save(os.path.join(UPLOAD_FOLDER, nombre_imagen))
 
         # Crear objeto
-        producto = Productos(None, nombre, nombre_imagen, precio, descripcion)
+        producto = Productos(None, nombre, nombre_imagen, precio, descripcion, codigo)
         # Agregar en la base de datos
         producto.agregar() 
 
-        # Guardar cada talla y cantidad del producto
-        for i in range(len(ids_tallas)):
-            id_t = ids_tallas[i]
-            stock = cantidades[i]
+        # Relacionar tallas con sus cantidades y registrar solo aquellas con stock disponible
+        for id_t, stock in zip(ids_tallas, cantidades):
 
-            if stock and int(stock) > 0:
+            # Si la cantidad de la talla es mayor o igual a 0 lo guarda (también lo convierte en entero)
+            if stock and int(stock) >= 0:
                 producto.asignar_stock(id_t, int(stock))
 
+        # Redirecciona al index del admin
         return redirect(url_for("admin"))
 
     tallas = Productos.obtener_tallas()
@@ -90,7 +101,12 @@ def actualizar_producto(id):
     stock = Productos.obtener_stock_por_producto(id)
     return render_template('admin/actualizar_producto.html', producto = producto, tallas = tallas, stock = stock)
 
+@app.route('/admin/eliminar_producto/<int:id>', methods=['GET'])
+def eliminar_producto(id):
+    Productos.eliminar(id)
+    return redirect(url_for('admin'))
 
 
+# Ejecuta el servidor en modo desarrollador
 if __name__ == '__main__': 
     app.run(debug=True)

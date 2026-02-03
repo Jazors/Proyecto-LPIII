@@ -8,11 +8,15 @@
         <img class="camisa__imagen" src="{{ url_for('static', filename='uploads/' ~ producto.imagen) }}" alt="Imagen">
         
         <div class="camisa__contenido">
-            <p>{{ producto.descripcion }}</p>
-            <p class="producto__precio">Precio: {{ producto.precio }}$</p>
+            <div>
+                <p>{{ producto.descripcion }}</p>
+            </div>
+            <div>
+                <p class="producto__precio__compra"><span>Precio:</span> {{ producto.precio }}$</p>
+            </div>
 
-            <form class="formulario" method="POST" action="/agregar_al_carrito">
-                {# Campo oculto para saber qué producto estamos comprando #}
+            <form class="formulario" method="POST" action="/carrito">
+                <!-- Campo oculto para obtener el id del producto que estamos comprando -->
                 <input type="hidden" name="id_producto" value="{{ producto.id }}">
 
                 <select class="formulario__campo" name="talla" required>
@@ -28,7 +32,7 @@
                     {% endfor %}
                 </select>
 
-                <input class="formulario__campo" type="number" name="cantidad" placeholder="Cantidad" min="1" value="1" required>
+                <input class="formulario__campo" type="number" name="cantidad" placeholder="Cantidad" min="1" required>
                 
                 <input class="formulario__submit" type="submit" value="Agregar al Carrito">
             </form>

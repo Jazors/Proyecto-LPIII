@@ -130,7 +130,7 @@ h3 {
 }
 
 .producto__precio {
-  font-size: 2.8rem;
+  font-size: 2.5rem;
   color: var(--secundario);
 }
 
@@ -140,6 +140,11 @@ h3 {
   margin: 1rem 0;
   text-align: center;
   line-height: 1.2;
+}
+
+.producto__precio__compra span {
+  font-size: 2rem;
+  font-family: var(--fuentePrincipal);
 }
 
 /** Graficos **/
@@ -258,6 +263,32 @@ h3 {
 }
 
 
+/* BOTONES */
+.btn {
+  display: inline-block;
+  border: none;
+  font-size: 2rem;
+  color: var(--blanco);
+  font-family: var(--fuentePrincipal);
+  padding: 1rem 3rem;
+  transition: background-color 0.3s ease;
+  margin-top: 2rem;
+}
+.btn-naranja {
+  background-color: var(--naranja);
+}
+.btn-rojo {
+  background-color: var(--rojo);
+  padding: 1.2rem 4rem;
+}
+.btn-rojo:hover {
+  cursor: pointer;
+}
+
+.btn-primarioOscuro {
+  background-color: var(--primarioOscuro);
+}
+
 
 /** ADMIN **/
 .acciones-tabla {
@@ -288,32 +319,6 @@ h3 {
 }
 .agregar_producto:hover {
   background-color: var(--secundarioOscuro);
-  cursor: pointer;
-}
-
-.btn-naranja {
-  display: inline-block;
-  background-color: var(--naranja);
-  color: var(--blanco);
-  border: none;
-  font-size: 2rem;
-  font-family: var(--fuentePrincipal);
-  padding: 1rem 3rem;
-  transition: background-color 0.3s ease;
-  margin-top: 2rem;
-}
-.btn-rojo {
-  display: inline-block;
-  background-color: var(--rojo);
-  color: var(--blanco);
-  border: none;
-  font-size: 2rem;
-  font-family: var(--fuentePrincipal);
-  padding: 1.2rem 4rem;
-  transition: background-color 0.3s ease;
-  margin-top: 2rem;
-}
-.btn-rojo:hover {
   cursor: pointer;
 }
 
@@ -416,4 +421,73 @@ label[for="imagen"] {
   border-radius: 1rem;
   height: 4rem;
   font-size: 1.5rem;
+}
+
+.acciones {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,.6);
+  justify-content: center;
+  align-items: center;
+}
+
+.contenido-modal {
+  background-color: var(--blanco);
+  padding: 4rem;
+  border-radius: 5px;
+  width: 80%;
+  max-width: 80rem;
+  position: relative;
+  border: 5px solid var(--primarioOscuro);
+}
+
+.confirmacion-modal {
+  color: var(--negro);
+  font-size: 2.8rem;
+  text-align: center;
+}
+
+.informacion-modal {
+  color: var(--negro);
+  font-size: 2rem;
+}
+
+.grid img {
+  width: 10rem;
+  padding: 0.5rem;
+  margin-left: 8rem;
+}
+
+.centrar-boton-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cerrar-modal {
+  position: absolute;
+  top: 2rem;
+  right: 3rem;
+  font-size: 4rem;
+  cursor: pointer;
+  color: red;
+  font-weight: bold;
+  transition: all .3 ease;
+}
+
+.cerrar-modal:hover {
+  transform: scale(1.1);
 }

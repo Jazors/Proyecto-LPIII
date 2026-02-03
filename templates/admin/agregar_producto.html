@@ -25,15 +25,20 @@
 
             {% for t in tallas %}
             <div class="fila-talla">
+                <!-- Acá se muestran las tallas -->
                 <input type="text" class="formulario__campo" value="{{ t[1] }}" readonly>
-                
+
+                <!-- Acá van los ids de las tallas -->
                 <input type="hidden" name="id_talla[]" value="{{ t[0] }}">
                 
+                <!-- Acá van las cantidades por cada talla -->
                 <input class="formulario__campo" type="number" name="cantidad[]" placeholder="0" min="0">
             </div>
             {% endfor %}
         </div>
 
+        <label for="codigo">Código</label>
+        <input class="formulario__campo" type="text" name="codigo" id="codigo">
 
         <label for="descripcion">Descripción</label>
         <textarea class="formulario__campo" name="descripcion" id="descripcion"></textarea>

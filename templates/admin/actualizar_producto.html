@@ -42,6 +42,9 @@
             {% endfor %}
         </div>
 
+        <label for="codigo">Código</label>
+        <input class="formulario__campo" type="text" name="codigo" id="codigo" value="{{producto.codigo}}">
+
         <label for="descripcion">Descripción</label>
         <textarea class="formulario__campo" name="descripcion" id="descripcion">{{producto.descripcion}}</textarea>
 
