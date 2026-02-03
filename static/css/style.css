@@ -1,9 +1,11 @@
 :root {
-  --primario: #9c27b0;
-  --primarioMedioOscuro: #9422a8;
-  --primarioOscuro: #89119d;
+  --primario: #275cb0;
+  --primarioMedioOscuro: #1f498d;
+  --primarioOscuro: #122c56;
   --secundario: #ffce00;
   --secundarioOscuro: rgb(233, 187, 2);
+  --naranja: #ff8000;
+  --rojo: #c61f1f;
   --blanco: #fff;
   --negro: #000;
 
@@ -245,6 +247,7 @@ h3 {
   transition: background-color 0.3s ease;
   grid-column: 1 / 3;
 }
+
 .formulario__submit:hover {
   cursor: pointer;
   background-color: var(--secundarioOscuro);
@@ -257,15 +260,20 @@ h3 {
 
 
 /** ADMIN **/
-
+.acciones-tabla {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+}
 .agregar_producto {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   height: 5rem;
   width: 5rem;
   margin-bottom: 2rem;
-  background-color: var(--secundario);
+  background-color: var(--secundarioOscuro);
   border-radius: 50%;
 }
 
@@ -283,6 +291,32 @@ h3 {
   cursor: pointer;
 }
 
+.btn-naranja {
+  display: inline-block;
+  background-color: var(--naranja);
+  color: var(--blanco);
+  border: none;
+  font-size: 2rem;
+  font-family: var(--fuentePrincipal);
+  padding: 1rem 3rem;
+  transition: background-color 0.3s ease;
+  margin-top: 2rem;
+}
+.btn-rojo {
+  display: inline-block;
+  background-color: var(--rojo);
+  color: var(--blanco);
+  border: none;
+  font-size: 2rem;
+  font-family: var(--fuentePrincipal);
+  padding: 1.2rem 4rem;
+  transition: background-color 0.3s ease;
+  margin-top: 2rem;
+}
+.btn-rojo:hover {
+  cursor: pointer;
+}
+
 table.tabla {
   margin-top: 4rem;
   width: 100%;
@@ -293,7 +327,7 @@ table thead {
   background-color: var(--primarioOscuro);
 }
 
-.bg:nth-child(odd) {
+.bg {
   background-color: var(--primarioMedioOscuro);
 }
 
@@ -301,6 +335,10 @@ table thead th {
   color: var(--blanco);
   padding: 2rem;
   font-family: var(--fuentePrincipal);
+}
+
+td {
+  border-bottom: 1px solid var(--primarioOscuro);
 }
 
 .producto__imagen {
@@ -369,4 +407,13 @@ label[for="imagen"] {
 .label-mini {
     font-family: var(--fuentePrincipal);
     color: var(--blanco);
+}
+
+.buscador {
+  padding: 0.5rem;
+  padding-left: 1rem;
+  border: 1px solid var(--primarioOscuro);
+  border-radius: 1rem;
+  height: 4rem;
+  font-size: 1.5rem;
 }

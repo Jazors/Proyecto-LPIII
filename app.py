@@ -48,12 +48,12 @@ def admin():
 @app.route("/admin/agregar_producto", methods=["GET", "POST"])
 def agregar_producto():
     if request.method == "POST":
-
+        # Recibir datos del formulario
         nombre = request.form["nombre"]
         precio = request.form["precio"]
         descripcion = request.form["descripcion"]
 
-        # Capturamos todos los IDs de tallas y todas las cantidades como listas
+        # Capturamos todos los IDs de tallas y todas las cantidades como listas para las diferentes cantidades por cada talla
         ids_tallas = request.form.getlist("id_talla[]")
         cantidades = request.form.getlist("cantidad[]")
 
@@ -65,9 +65,10 @@ def agregar_producto():
 
         # Crear objeto
         producto = Productos(None, nombre, nombre_imagen, precio, descripcion)
-        id_producto_nuevo = producto.agregar() 
+        # Agregar en la base de datos
+        producto.agregar() 
 
-        # Guardar cada talla usando la INSTANCIA 'producto'
+        # Guardar cada talla y cantidad del producto
         for i in range(len(ids_tallas)):
             id_t = ids_tallas[i]
             stock = cantidades[i]

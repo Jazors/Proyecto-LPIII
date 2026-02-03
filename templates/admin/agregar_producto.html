@@ -25,7 +25,7 @@
 
             {% for t in tallas %}
             <div class="fila-talla">
-                <input type="text" class="formulario__campo" value="{{ t[1] }}">
+                <input type="text" class="formulario__campo" value="{{ t[1] }}" readonly>
                 
                 <input type="hidden" name="id_talla[]" value="{{ t[0] }}">
                 

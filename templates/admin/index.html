@@ -3,8 +3,13 @@
 {% block contenido %}
 
     <h1>Productos</h1>
-    <div class="agregar_producto">
-        <a href="{{url_for('agregar_producto')}}">+</a>
+    <div class="acciones-tabla">
+        <div class="agregar_producto">
+            <a href="{{url_for('agregar_producto')}}">+</a>
+        </div>
+        <div>
+            <input type="text" name="buscador" class="buscador" id="buscador" placeholder="Buscar por nombre">
+        </div>
     </div>
     
     <table class="tabla">
@@ -23,7 +28,7 @@
             <tr class="bg">
                 <td>
                     <div class="producto__informacion">
-                        <p class="producto__nombre">{{p.nombre}}</p>
+                        <p class="">{{p.nombre}}</p>
                     </div>
                 </td>
                 <td>
@@ -32,14 +37,14 @@
                     </div>
                 </td>
                 <td>
-                    <p class="producto__precio">{{p.precio}}$</p>
+                    <p class="">{{p.precio}}$</p>
                 </td>
                 <td>
-                    <a class="" href="{{url_for('actualizar_producto', id = p.id)}}">Actualizar</a>
+                    <a class="btn-naranja" href="{{url_for('actualizar_producto', id = p.id)}}">Actualizar</a>
                     <form class="w-100" method="POST">
                         <input type="hidden" name="id" value="">
                         <input type="hidden" name="tipo" value="">
-                        <input class="" type="submit" value="Eliminar">
+                        <input class="btn-rojo" type="submit" value="Eliminar">
                     </form>
                 </td>
             </tr>
@@ -47,6 +52,6 @@
         </tbody>
     </table>
 
-
+    <script src="/static/js/buscador.js"></script>
 
 {% endblock %}
