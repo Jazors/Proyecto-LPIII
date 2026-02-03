@@ -17,7 +17,7 @@ class Productos:
             cursor.execute("""
                             INSERT INTO productos (nombre, imagen, precio, descripcion, codigo)
                             VALUES (?, ?, ?, ?, ?)
-                            """, (self.nombre, self.imagen, self.precio, self.descripcion, self.codigo))
+                           """, (self.nombre, self.imagen, self.precio, self.descripcion, self.codigo))
             
             # Obtener el id del producto recién agregado
             self.id = cursor.lastrowid 
@@ -33,14 +33,24 @@ class Productos:
         cursor = db.cursor()
 
         cursor.execute(""" REPLACE INTO variantes_camisas (id_producto, id_talla, stock) VALUES
-                            (?, ?, ?) """, (self.id, id_talla, stock))
+                            (?, ?, ?) 
+                       """, (self.id, id_talla, stock))
         
         db.commit()
         db.close()
 
+    # Actualizar Producto
+    # def actualizar(self, id):
+
+
+    @staticmethod
+    # def actualizar_stock(id_producto, id_talla, stock):
+
+
     # Eliminar producto
     @staticmethod
-    # def eliminar(id):
+    #def eliminar(id):
+
 
     @staticmethod
     def obtener_tallas():

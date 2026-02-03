@@ -3,6 +3,23 @@
 {% block contenido %}
 
     <h1>Productos</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <!-- Mostrar mensajes flash -->
+            {% with messages=get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+
+    
     <div class="acciones-tabla">
         <div class="agregar_producto">
             <a href="{{url_for('agregar_producto')}}">+</a>
@@ -11,7 +28,6 @@
             <input type="text" name="buscador" class="buscador" id="buscador" placeholder="Buscar por nombre">
         </div>
     </div>
-    
     <table class="tabla">
         <thead>
             <tr>
@@ -55,20 +71,22 @@
             <!-- Modal -->
             <div id="modal-{{p.id}}" class="modal">
                 <div class="contenido-modal">
-                    <div>
+                    <form action="{{url_for('eliminar_producto', id = p.id)}}" method="POST">
                         <span class="cerrar-modal" onclick="cerrarModal('{{p.id}}')">&times;</span>
                         <p class="confirmacion-modal">¿Seguro que desea eliminar este producto?</p>
                         <div class="grid">
-                            <img class="producto__imagen" src="{{url_for('static',filename='uploads/' ~ p.imagen)}}" alt="imagen camisa">
+                            <div class="img-modal">
+                                <img class="producto__imagen" src="{{url_for('static',filename='uploads/' ~ p.imagen)}}" alt="imagen camisa">
+                            </div>
                             <div>
                                 <p class="informacion-modal">Nombre: {{p.nombre}}</p>
                                 <p class="informacion-modal">Código: {{p.codigo}}</p>
                             </div>
                         </div>
                         <div class="centrar-boton-modal">
-                            <a href="{{url_for('eliminar_producto', id = p.id)}}" class="btn btn-primarioOscuro">Confirmar</a>
+                            <button class="btn btn-primarioOscuro" type="submit">Confirmar</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         {% endfor %}
