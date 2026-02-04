@@ -26,7 +26,7 @@
             <input class="formulario__campo" type="file" name="imagen" accept="image/*" id="imagen">
             <span id="nombre_imagen"></span>
         </div>
-        {% if producto.imagen: %}
+        {% if producto.imagen %}
         <img src="{{url_for('static', filename='uploads/' ~ producto.imagen)}}" class="imagen-small" alt="imagen">
         {% endif %}
 
