@@ -39,18 +39,16 @@ class Productos:
         db.commit()
         db.close()
 
-    # Actualizar Producto
-    # def actualizar(self, id):
-
+    # Actualizar producto
+    #def actualizar(self, id):
 
     @staticmethod
-    # def actualizar_stock(id_producto, id_talla, stock):
+    #def actualizar_stock(id_producto, id_talla, stock):
 
 
     # Eliminar producto
     @staticmethod
     #def eliminar(id):
-
 
     @staticmethod
     def obtener_tallas():

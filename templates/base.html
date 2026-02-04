@@ -11,19 +11,23 @@
     {% endblock %}
 </head>
 <body>
+
     <header class="header">
-            {% if not request.path.startswith('/admin') %}
-            <a href="{{ url_for('index') }}">
+            {% if request.path.startswith('/admin') %}
+            <a href="{{ url_for('admin') }}">
+                <img class="header__logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logotipo">
+            </a>
+            {% elif request.endpoint == 'login' %}
+            <a href="{{ url_for('login') }}">
                 <img class="header__logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logotipo">
             </a>
             {% else %}
-            <a href="{{ url_for('admin') }}">
+            <a href="{{ url_for('index') }}">
                 <img class="header__logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logotipo">
             </a>
             {% endif %} 
     </header>
-
-        {% if not request.path.startswith('/admin') %}
+        {% if not request.path.startswith('/admin') and not request.endpoint == 'login' %}
         <nav class="navegacion">
             <a href="{{ url_for('index') }}" class="navegacion__enlace {{ 'navegacion__enlace--activo' if request.endpoint == 'index' }}">Tienda</a>
             <a href="{{ url_for('nosotros') }}" class="navegacion__enlace {{ 'navegacion__enlace--activo' if request.endpoint == 'nosotros' }}">Nosotros</a>
@@ -31,7 +35,7 @@
         {% endif %}
 
     <main class="contenedor">
-        {% block contenido %} 
+        {% block contenido %}
         {% endblock %}
     </main>
 

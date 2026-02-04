@@ -300,6 +300,18 @@ h3 {
 }
 
 
+
+/* LOGIN */
+.formulario-login {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 1rem;
+}
+
+
+
+
 /** ADMIN **/
 .acciones-tabla {
   display: flex;
@@ -529,4 +541,3 @@ label[for="imagen"] {
 .alert strong {
   font-weight: 700;
 }
-

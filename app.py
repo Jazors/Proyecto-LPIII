@@ -1,7 +1,8 @@
-from flask import Flask, flash, render_template, request, redirect, url_for
+from flask import Flask, flash, render_template, request, redirect, url_for, session
 import os
 from werkzeug.utils import secure_filename
 from models.Productos import Productos
+from models.Autenticar import Autenticar
 
 app = Flask(__name__)
 app.secret_key = '454ghgghfg8h9fghjnrjtr'
@@ -10,11 +11,37 @@ UPLOAD_FOLDER = 'static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Inicio de sesión
-@app.route("/login")
+@app.route("/login", methods=['GET', 'POST'])
 def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+        if not email or not password:
+            flash('Rellene todos los campos', 'danger')
+            return redirect(request.url)
+        
+        autenticado = Autenticar.verificar_email(email)
+        if not autenticado:
+            flash('El email no existe', 'danger')
+            return redirect(request.url)
+        autenticado = Autenticar.verificar_password(email, password)
+        if not autenticado:
+            flash('Contraseña incorrecta', 'danger')
+            return redirect(request.url)
+        
+        session['user'] = email
+        return redirect(url_for('admin'))
+
     return render_template('login.html')
 
-#### USUARIO ####
+# Cerrar sesión
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect(url_for('index'))
+
+#### CLIENTE ####
 
 # Página principal
 @app.route("/")
