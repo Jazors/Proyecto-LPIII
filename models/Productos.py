@@ -47,8 +47,16 @@ class Productos:
 
 
     # Eliminar producto
-    #@staticmethod
-    #def eliminar(id):
+    @staticmethod
+    def eliminar(id_producto):
+        db = conectarDB()
+        cursor = db.cursor()
+        sql = "DELETE FROM variantes_camisas WHERE id_producto = ?"
+        sql2 = "DELETE FROM productos WHERE id_producto = ?"
+        cursor.execute(sql, (id_producto,))
+        cursor.execute(sql2, (id_producto,))
+        db.commit()
+        db.close()
 
 
     @staticmethod
