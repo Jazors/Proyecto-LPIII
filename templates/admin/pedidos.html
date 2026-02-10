@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block contenido %}
+
+<table class="tabla">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Código</th>
+            <th>Total</th>
+            <th>Talla</th>
+            <th>Cantidad</th>
+            <th>Cliente</th>
+            <th>Teléfono</th>
+            <th>Dirección</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+    {% for pedido in lista_pedidos %}
+        <tr class="bg">
+            <td><p>{{pedido.producto}}</p></td>
+            <td><p>{{pedido.codigo}}</p></td>
+            <td><p>{{pedido.subtotal}}$</p></td>
+            <td><p>{{pedido.talla}}</p></td>
+            <td><p>{{pedido.cantidad}}</p></td>
+            <td><p>{{pedido.cliente}}</p></td>
+            <td><p>{{pedido.telefono}}</p></td>
+            <td><p>{{pedido.direccion}}</p></td>
+        </tr>
+        
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

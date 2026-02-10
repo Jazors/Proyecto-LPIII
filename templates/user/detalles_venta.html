@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block contenido %}
+
+<div class="contenedor-detalles">
+    <div class="ticket">
+        <header class="ticket__header">
+            <h1>Resumen de Compra</h1>
+            <p>Orden #{{ venta[0] }}</p>
+            <span class="fecha">{{ venta[1] }}</span>
+        </header>
+
+        <section class="ticket__cliente">
+            <h3>Datos de Envío</h3>
+            <p><strong>Cliente:</strong> {{ venta[3] }}</p>
+            <p><strong>Dirección:</strong> {{ venta[4] }}</p>
+        </section>
+
+        <table class="tabla-detalles">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cant.</th>
+                    <th>Precio</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in productos %}
+                <tr>
+                    <td>{{ p[0] }} <small>({{ p[1] }})</small></td>
+                    <td>{{ p[2] }}</td>
+                    <td>{{ p[3] }}$</td>
+                    <td>{{ p[4] }}$</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <footer class="ticket__footer">
+            <div class="total-pago">
+                <span>Total Pagado:</span>
+                <strong>{{ venta[2] }}$</strong>
+            </div>
+            <a href="{{ url_for('index') }}" class="btn-volver">Volver a la Tienda</a>
+        </footer>
+    </div>
+</div>
+
+{% endblock %}

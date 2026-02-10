@@ -3,6 +3,7 @@ import os
 from werkzeug.utils import secure_filename
 from models.Productos import Productos
 from models.Autenticar import Autenticar
+from models.Ventas import Ventas
 
 app = Flask(__name__)
 app.secret_key = '454ghgghfg8h9fghjnrjtr'

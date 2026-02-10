@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+<h1>Carrito</h1>
+<div class="productos-carrito">
+    
+    {% if carrito %}
+        {% for p in carrito %}
+        <div class="producto-info">
+            <img class="carrito-imagen" src="{{url_for('static',filename='uploads/' ~ p.imagen)}}" alt="imagen">
+            <p class="carrito-nombre"><strong>{{p.nombre}}</strong></p>
+            <p class="carrito-talla">{{p.talla}}</p>
+            <p class="carrito-precio">{{p.precio}}$</p>
+            <p class="carrito-cantidad">Cant: {{p.cantidad}}</p>
+
+            <form action="{{url_for('eliminar_carrito', id = p.id_carrito)}}" method="POST">
+                <button type="submit" class="btn-eliminar-svg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
+                </button>
+            </form>
+        </div>
+        {% endfor %}
+        <p class="carrito-total">Total: <strong>{{total}}$</strong></p>
+        <a class="btn btn-secundario" style="color: var(--negro)" href="">Continuar</a>
+    {% endif %}
+</div> <!--.producto-->
+
+<div id="modalCompra" class="modal">
+    <div class="modal-contenido">
+        <span class="cerrar-modal">&times;</span>
+        <h2 style="text-align: center; margin-bottom: 2rem;">Datos de Envío</h2>
+        
+        <form action="{{ url_for('procesar_venta') }}" method="POST" class="formulario-modal">
+            <div class="campo">
+                <label for="nombre">Nombre Completo</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre y apellido" required>
+            </div>
+
+            <div class="campo">
+                <label for="telefono">Teléfono de Contacto</label>
+                <input type="tel" id="telefono" name="telefono" placeholder="Ej: 04141234567" required>
+            </div>
+
+            <div class="campo">
+                <label for="direccion">Dirección Detallada</label>
+                <textarea id="direccion" name="direccion" placeholder="Indica calle, número de casa y puntos de referencia" required></textarea>
+            </div>
+            
+            <div class="total-modal">
+                <span>Total a pagar:</span>
+                <strong>{{ total }}$</strong>
+            </div>
+
+            <input type="submit" class="btn-confirmar" value="Confirmar Pedido">
+        </form>
+    </div>
+</div>
+
+<script src="/static/js/modalCompra.js"></script>
+
+{% endblock %}

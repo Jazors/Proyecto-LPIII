@@ -15,15 +15,14 @@
                 <p class="producto__precio__compra"><span>Precio:</span> {{ producto.precio }}$</p>
             </div>
 
-            <form class="formulario" method="POST" action="/carrito">
-                <!-- Campo oculto para obtener el id del producto que estamos comprando -->
+            <form class="formulario" method="POST" action="{{url_for('agregar_al_carrito')}}">
                 <input type="hidden" name="id_producto" value="{{ producto.id }}">
 
-                <select class="formulario__campo" name="talla" required>
+                <select class="formulario__campo" name="id_talla" required>
                     <option disabled selected value="">-- Seleccionar Talla --</option>
                     {% for v in producto.variantes %}
                         {% if v.stock > 0 %}
-                            <option value="{{ v.talla }}">
+                            <option value="{{ v.id_talla }}">
                                 {{ v.talla }} ({{ v.stock }} disponibles)
                             </option>
                         {% else %}
