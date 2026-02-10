@@ -39,16 +39,17 @@ class Productos:
         db.commit()
         db.close()
 
-    # Actualizar producto
     #def actualizar(self, id):
 
-    @staticmethod
+
+    #@staticmethod
     #def actualizar_stock(id_producto, id_talla, stock):
 
 
     # Eliminar producto
-    @staticmethod
+    #@staticmethod
     #def eliminar(id):
+
 
     @staticmethod
     def obtener_tallas():
@@ -77,12 +78,12 @@ class Productos:
         db = conectarDB()
         cursor = db.cursor()
 
-        cursor.execute(""" SELECT p.id_producto, p.nombre, p.imagen, p.precio, p.descripcion, p.codigo, t.talla, vc.stock FROM variantes_camisas vc
+        cursor.execute(""" SELECT p.id_producto, p.nombre, p.imagen, p.precio, p.descripcion, p.codigo, t.id_talla, t.talla, vc.stock FROM variantes_camisas vc
                             JOIN productos p ON vc.id_producto = p.id_producto
                             JOIN tallas t ON vc.id_talla = t.id_talla
                             WHERE p.id_producto = ?
                        """, (id,))
-        filas = cursor.fetchall()
+        filas = cursor.fetchall()  # Usamos fetchall() porque son varias tallas por cada producto
         db.close()
 
         if not filas:
@@ -93,14 +94,21 @@ class Productos:
 
         # Retorna un diccionario con los datos de la consulta
         return {
-                "id": primer_registro[0],
-                "nombre": primer_registro[1],
-                "imagen": primer_registro[2],
-                "precio": primer_registro[3],
-                "descripcion": primer_registro[4],
-                "codigo": primer_registro[5],
-                "variantes": [{"talla": f[6], "stock": f[7]} for f in filas]
-            }
+            "id": primer_registro["id_producto"],
+            "nombre": primer_registro["nombre"],
+            "imagen": primer_registro["imagen"],
+            "precio": primer_registro["precio"],
+            "descripcion": primer_registro["descripcion"],
+            "codigo": primer_registro["codigo"],
+            "variantes": [
+                {
+                    "id_talla": f["id_talla"],
+                    "talla": f["talla"],
+                    "stock": f["stock"]
+                } for f in filas
+            ]
+        }
+
 
 
     @staticmethod
