@@ -39,7 +39,7 @@ class Productos:
         db.commit()
         db.close()
 
-    #def actualizar(self, id):
+    # Actualizar producto
     def actualizar(self, id):
         db = conectarDB()
         cursor = db.cursor()
@@ -51,6 +51,7 @@ class Productos:
         db.commit()
         db.close()
 
+    # Actualizar stock del producto
     def actualizar_stock(id_producto, id_talla, stock):
         db = conectarDB()
         cursor = db.cursor()
