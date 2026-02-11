@@ -4,6 +4,7 @@ from werkzeug.utils import secure_filename
 from models.Productos import Productos
 from models.Autenticar import Autenticar
 from models.Ventas import Ventas
+from models.Carrito import Carrito
 
 app = Flask(__name__)
 app.secret_key = '454ghgghfg8h9fghjnrjtr'
@@ -73,8 +74,31 @@ def agregar_al_carrito():
         return redirect('/')
 
 @app.route('/carrito')
-def carrito():
-    return render_template('user/carrito_compras.html')
+def carrito(): 
+    carrito = Carrito.obtener_productos()
+    return render_template('user/carrito_compras.html', carrito = carrito)
+
+# Procesar venta
+@app.route('/procesar_venta', methods=['POST'])
+def procesar_venta():
+    # Recoger datos del formulario
+    datos_cliente = {
+        'nombre': request.form.get('nombre'),
+        'telefono': request.form.get('telefono'),
+        'direccion': request.form.get('direccion')
+    }
+
+    id_cliente = Ventas.registrar_cliente(datos_cliente)
+    id_venta = Ventas.crear_venta(id_cliente)
+
+    exito, mensaje = Ventas.procesar_productos(id_venta)
+
+    if exito:
+        return redirect(url_for('detalles_venta', id_venta=id_venta))
+    else:
+        flash(mensaje, 'danger')
+        return redirect(request.url)
+
 
 
 #### ADMIN ####
