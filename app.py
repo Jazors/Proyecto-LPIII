@@ -66,17 +66,29 @@ def producto(id):
 # Agregar al carrito
 @app.route('/agregar_carrito', methods=["GET", "POST"])
 def agregar_al_carrito():
-    if request.method=='POST':
+    if request.method == 'POST':
         id_producto = request.form['id_producto']
-        talla = request.form['talla']
-        stock = request.form['cantidad']
-        
-        return redirect('/')
+        id_talla = request.form['id_talla']
+        cantidad = int(request.form['cantidad'])
+
+        if id_producto and id_talla and cantidad:
+            resultado = Carrito.agregar_producto(id_producto, id_talla, cantidad)
+            if not resultado:
+                flash('No hay suficiente stock para esa cantidad', 'danger')
+                return redirect(request.url)
+            flash('Agregado correctamente', 'success')
+            return redirect(url_for('index'))
 
 @app.route('/carrito')
 def carrito(): 
     carrito = Carrito.obtener_productos()
-    return render_template('user/carrito_compras.html', carrito = carrito)
+    total = 0
+
+    # Calculamos el total general para mostrarlo en el carrito
+    for producto in carrito:
+        total += producto['subtotal']
+
+    return render_template('user/carrito_compras.html', carrito = carrito, total = total)
 
 # Procesar venta
 @app.route('/procesar_venta', methods=['POST'])
@@ -91,6 +103,7 @@ def procesar_venta():
     id_cliente = Ventas.registrar_cliente(datos_cliente)
     id_venta = Ventas.crear_venta(id_cliente)
 
+    # Retorna dos resultados el método (Si todo sale bien y el mensaje)
     exito, mensaje = Ventas.procesar_productos(id_venta)
 
     if exito:

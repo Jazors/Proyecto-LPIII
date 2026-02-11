@@ -32,8 +32,9 @@ class Productos:
         db = conectarDB()
         cursor = db.cursor()
 
-        cursor.execute(""" REPLACE INTO variantes_camisas (id_producto, id_talla, stock) VALUES
-                            (?, ?, ?) 
+        cursor.execute(""" 
+                        REPLACE INTO variantes_camisas (id_producto, id_talla, stock)
+                        VALUES (?, ?, ?) 
                        """, (self.id, id_talla, stock))
         
         db.commit()
