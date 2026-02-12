@@ -32,7 +32,7 @@ def login():
             flash('Contraseña incorrecta', 'danger')
             return redirect(request.url)
         
-        session['user'] = email
+        session['admin'] = email
         return redirect(url_for('admin'))
 
     return render_template('login.html')
@@ -40,7 +40,7 @@ def login():
 # Cerrar sesión
 @app.route('/logout')
 def logout():
-    session.pop('user', None)
+    session.pop('admin', None)
     return redirect(url_for('index'))
 
 #### CLIENTE ####
@@ -115,6 +115,13 @@ def procesar_venta():
 
 
 #### ADMIN ####
+
+@app.before_request
+def verificar_sesion():
+    # Si la URL actual empieza con /admin y no hay usuario en sesión.
+    if request.path.startswith('/admin') and 'admin' not in session:
+        flash('No intentes burlar al sistema', 'danger')
+        return redirect(url_for('login'))
 
 # Página principal
 @app.route('/admin')
@@ -242,6 +249,11 @@ def eliminar_producto(id):
     
     flash('Producto eliminado correctamente', 'success')
     return redirect(url_for('admin'))
+
+@app.route('/admin/pedidos')
+def pedidos():
+    lista_pedidos = Ventas().lista_pedidos()
+    return render_template('admin/pedidos.html', lista_pedidos = lista_pedidos )
 
 # Ejecuta el servidor en modo desarrollador
 if __name__ == '__main__': 
