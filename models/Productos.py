@@ -40,11 +40,27 @@ class Productos:
         db.close()
 
     #def actualizar(self, id):
+    def actualizar(self, id):
+        db = conectarDB()
+        cursor = db.cursor()
+        cursor.execute("""
+                        UPDATE productos 
+                        SET nombre = ?, imagen = ?, precio = ?, descripcion = ?, codigo = ?
+                        WHERE id_producto = ?
+                       """, (self.nombre, self.imagen, self.precio, self.descripcion, self.codigo, id))
+        db.commit()
+        db.close()
 
-
-    #@staticmethod
-    #def actualizar_stock(id_producto, id_talla, stock):
-
+    def actualizar_stock(id_producto, id_talla, stock):
+        db = conectarDB()
+        cursor = db.cursor()
+        cursor.execute("""
+                        UPDATE variantes_camisas 
+                        SET stock = ?
+                        WHERE id_producto = ? AND id_talla = ?
+                       """, (stock, id_producto, id_talla))
+        db.commit()
+        db.close()
 
     # Eliminar producto
     @staticmethod
