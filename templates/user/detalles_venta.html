@@ -1,6 +1,19 @@
 {% extends 'base.html' %}
 {% block contenido %}
-
+<div class="row justify-content-center" style="margin-top: 1rem;">
+    <div class="col-12">
+        <!-- Mostrar mensajes flash -->
+        {% with messages=get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+</div>
 <div class="contenedor-detalles">
     <div class="ticket">
         <header class="ticket__header">

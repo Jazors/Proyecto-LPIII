@@ -65,7 +65,12 @@ class Carrito:
                        """)
         productos = cursor.fetchall()
         db.close()
-        return productos
+        total = 0
+        # Calculamos el total general para mostrarlo en el carrito
+        for producto in productos:
+            total += producto['subtotal']
+
+        return productos, total
 
 
     @staticmethod

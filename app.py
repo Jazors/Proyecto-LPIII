@@ -86,11 +86,7 @@ def agregar_al_carrito():
 @app.route('/carrito')
 def carrito():
 
-    carrito = Carrito.obtener_productos()
-    total = 0
-    # Calculamos el total general para mostrarlo en el carrito
-    for producto in carrito:
-        total += producto['subtotal']
+    carrito, total = Carrito.obtener_productos()
 
     return render_template('user/carrito_compras.html', carrito = carrito, total = total)
 
@@ -114,13 +110,15 @@ def procesar_venta():
     id_cliente = Ventas.registrar_cliente(datos_cliente)
     id_venta = Ventas.crear_venta(id_cliente)
 
+    # El método devuelve dos resultados (si funciona o no, y el mensaje correspondiente)
     exito, mensaje = Ventas.procesar_productos(id_venta)
 
     if exito:
+        flash(mensaje, 'success')
         return redirect(url_for('detalles_venta', id_venta=id_venta))
     else:
         flash(mensaje, 'danger')
-        return redirect(request.url)
+        return redirect(url_for('carrito'))
 
 @app.route('/mis-compras/<int:id_venta>')
 def detalles_venta(id_venta):
