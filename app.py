@@ -1,14 +1,17 @@
 from flask import Flask, flash, render_template, request, redirect, url_for, session
 import os
 from werkzeug.utils import secure_filename
+
+# Clases
 from models.Productos import Productos
 from models.Autenticar import Autenticar
-from models.Ventas import Ventas
 from models.Carrito import Carrito
+from models.Ventas import Ventas
 
 app = Flask(__name__)
 app.secret_key = '454ghgghfg8h9fghjnrjtr'
 
+# Carpeta de imágenes
 UPLOAD_FOLDER = 'static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -41,7 +44,7 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('admin', None)
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 #### CLIENTE ####
 
@@ -64,7 +67,7 @@ def producto(id):
     return render_template('user/producto.html', producto = producto)
 
 # Agregar al carrito
-@app.route('/agregar_carrito', methods=["GET", "POST"])
+@app.route('/agregar_al_carrito', methods=["POST"])
 def agregar_al_carrito():
     if request.method == 'POST':
         id_producto = request.form['id_producto']
@@ -75,21 +78,29 @@ def agregar_al_carrito():
             resultado = Carrito.agregar_producto(id_producto, id_talla, cantidad)
             if not resultado:
                 flash('No hay suficiente stock para esa cantidad', 'danger')
-                return redirect(request.url)
+                return redirect(url_for('producto', id = id_producto))
             flash('Agregado correctamente', 'success')
             return redirect(url_for('index'))
 
+# Carrito
 @app.route('/carrito')
-def carrito(): 
+def carrito():
+
     carrito = Carrito.obtener_productos()
     total = 0
-
     # Calculamos el total general para mostrarlo en el carrito
     for producto in carrito:
         total += producto['subtotal']
 
     return render_template('user/carrito_compras.html', carrito = carrito, total = total)
 
+# Eliminar del carrito
+@app.route('/eliminar_carrito/<int:id>', methods=['POST'])
+def eliminar_carrito(id):
+    if request.method=='POST':
+        Carrito.eliminar_producto(id)
+        return redirect(url_for('carrito'))
+    
 # Procesar venta
 @app.route('/procesar_venta', methods=['POST'])
 def procesar_venta():
@@ -103,7 +114,6 @@ def procesar_venta():
     id_cliente = Ventas.registrar_cliente(datos_cliente)
     id_venta = Ventas.crear_venta(id_cliente)
 
-    # Retorna dos resultados el método (Si todo sale bien y el mensaje)
     exito, mensaje = Ventas.procesar_productos(id_venta)
 
     if exito:
@@ -112,10 +122,14 @@ def procesar_venta():
         flash(mensaje, 'danger')
         return redirect(request.url)
 
+@app.route('/mis-compras/<int:id_venta>')
+def detalles_venta(id_venta):
+    datos_venta, lista_productos = Ventas.detalles_venta(id_venta)
+        
+    return render_template('user/detalles_venta.html', venta=datos_venta, productos=lista_productos)
 
 
 #### ADMIN ####
-
 @app.before_request
 def verificar_sesion():
     # Si la URL actual empieza con /admin y no hay usuario en sesión.
@@ -250,10 +264,13 @@ def eliminar_producto(id):
     flash('Producto eliminado correctamente', 'success')
     return redirect(url_for('admin'))
 
+
+
 @app.route('/admin/pedidos')
 def pedidos():
     lista_pedidos = Ventas().lista_pedidos()
     return render_template('admin/pedidos.html', lista_pedidos = lista_pedidos )
+
 
 # Ejecuta el servidor en modo desarrollador
 if __name__ == '__main__': 

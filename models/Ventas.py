@@ -138,6 +138,9 @@ class Ventas:
                         JOIN tallas t ON dv.id_talla = t.id_talla
                         JOIN ventas v ON dv.id_venta = v.id_venta
                         JOIN clientes c ON v.id_cliente = c.id_cliente
+                        ORDER BY
+                            id_detalles_venta
+                        DESC
                        """)
         filas = cursor.fetchall()
         db.close()
