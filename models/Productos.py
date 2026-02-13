@@ -8,7 +8,8 @@ class Productos:
         self.precio = precio
         self.descripcion = descripcion
         self.codigo = codigo
-
+        self.variantes = []
+        
     # Agregar producto
     def agregar(self):
             db = conectarDB()

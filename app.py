@@ -177,7 +177,7 @@ def agregar_producto():
         # Relacionar tallas con sus cantidades y registrar solo aquellas con stock disponible
         for id_t, stock in zip(ids_tallas, cantidades):
 
-            # Si la cantidad de la talla es mayor o igual a 0 lo guarda (también lo convierte en entero)
+            # Si existe y la cantidad de la talla es mayor o igual a 0 lo guarda (también lo convierte en entero)
             if stock and int(stock) >= 0:
                 producto.asignar_stock(id_t, int(stock))
 
